@@ -1,7 +1,7 @@
 {
   "name": "truffle-analyze",
   "namespace": "consensys",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Add vulnerability and weakness analysis via the MythOS",
   "dependencies": {
     "armlet": ">=0.3.0",
