@@ -75,21 +75,31 @@ const Analyze = {
         done(err);
       }
 
-      // console.log(`Reading ${buildJsonPath}`);
+      let mythril_api_key = null;
+      let mythril_password = null;
 
-      if (process.env.MYTHRIL_API_KEY === undefined) {
+      if (process.env.MYTHRIL_PASSWORD === undefined) {
+        if (process.env.MYTHRIL_API_KEY === undefined) {
+          options.logger.log('You need to set environment variable '
+                             + 'MYTHRIL_PASSWORD or MYTHRIL_API_KEY to run analyze.');
+          done(null, [], []);
+          return
+        }
+      } else if (process.env.MYTHRIL_ETH_ADDRESS === undefined) {
         options.logger.log('You need to set environment variable '
-                           + 'MYTHRIL_API_KEY to run analyze.');
+                           + 'MYTHRIL_ETH_ADDRESS when MYTHRIL_PASSWORD is set to run analyze.');
         done(null, [], []);
-        return;
       }
 
-      let client = new armlet.Client(
-        {
-          // NOTE: authentication is changing in the next API release
-          apiKey: process.env.MYTHRIL_API_KEY,
-          userEmail: process.env.MYTHRIL_API_KEY || 'bogus@example.com'
-        });
+      let armletOptions = {
+        email: process.env.MYTHRIL_EMAIL,
+        apiKey: process.env.MYTHRIL_API_KEY,
+        ethAddress: process.env.MYTHRIL_ETH_ADDRESS,
+        password: process.env.MYTHRIL_PASSWORD,
+        platforms: ['truffle']  // client chargeback
+      }
+
+      let client = new armlet.Client(armletOptions);
 
       if (!fs.existsSync(buildJsonPath)) {
         options.logger.log("Can't read build/contract JSON file: " +
