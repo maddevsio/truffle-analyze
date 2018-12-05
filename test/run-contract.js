@@ -24,7 +24,6 @@ let armletOptions = {
 if (process.env.MYTHRIL_PASSWORD === undefined) {
     console.log('You need to set environment variable '
                        + 'MYTHRIL_PASSWORD to run analyze.');
-    return;
 }
 
 if (process.env.MYTHRIL_ETH_ADDRESS) {

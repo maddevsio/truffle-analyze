@@ -3,7 +3,7 @@ const SrcMap = require('../lib/srcmap');
 
 describe('srcmap', function() {
     it('should give back an AST we can use', () =>  {
-        const soliditySource = 'pragma solidity ^0.4.22;\ncontract Simple { }\n';
+        const soliditySource = 'pragma solidity ^0.5.0;\ncontract Simple { }\n';
 
         const solJSON = SrcMap.compileContract(soliditySource);
         assert.ok('test.sol' in solJSON.sources,
