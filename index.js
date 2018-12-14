@@ -285,8 +285,8 @@ Options:
       client.analyze(analyzeOpts)
         .then(issues => {
           const formatter = getFormatter(analyzeOpts.style);
-          let esIssues = mythril.issues2Eslint(issues, buildObj, analyzeOpts);
-          // console.log(esIssues); // debug
+          const info = new mythril.Info(buildObj);
+          const esIssues = info.issues2Eslint(issues, analyzeOpts);
           esReporter.printReport(esIssues, solidityFile, formatter, analyzeOpts.logger.log);
           done(null, [], []);
         }).catch(err => {
